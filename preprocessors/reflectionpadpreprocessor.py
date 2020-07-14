@@ -12,7 +12,6 @@ class ReflectionPadPreprocessor:
     ----------
     pad: int
         amount of padding to add to both height and width of the image
-
     """
 
     def __init__(self, pad):
