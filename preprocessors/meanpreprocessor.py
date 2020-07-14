@@ -5,7 +5,7 @@ import numpy as np
 class MeanPreprocessor:
     """
     Processes the image by (optionally) normalizing the pixel values into [0, 1],
-    subtracts the mean, and finally divides the values by the standard deviation
+    subtracting the mean, and finally dividing the values by the standard deviation
 
     Attributes
     ----------
