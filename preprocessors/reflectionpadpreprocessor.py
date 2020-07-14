@@ -4,7 +4,7 @@ import numpy as np
 
 class ReflectionPadPreprocessor:
     """
-    Pads the images by the specified amount using the reflection of the outer edges. 
+    Pads the images by the specified amount using the reflection of the outer edges.
     Equivalent to using 'REFLECT' mode in tf.pad
     (Support only for padding height and width by the same amount)
 
