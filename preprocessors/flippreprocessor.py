@@ -12,7 +12,6 @@ class FlipPreprocessor:
     prob: float
         flipping probability.
         eg: if prob = 0.5, input image will be flipped 50% of the time
-
     """
 
     def __init__(self, prob):
