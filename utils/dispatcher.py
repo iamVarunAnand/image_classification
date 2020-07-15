@@ -14,6 +14,11 @@ MODELS = {
     # "mxresnet50": MXResNet50(height = 224, width = 224, depth = 10, classes = 1000),
     # "mxresnet101": MXResNet101(height = 224, width = 224, depth = 10, classes = 1000),
     # "mxresnet152": MXResNet152(height = 224, width = 224, depth = 10, classes = 1000),
+    # "se-mxresnet18": SEMXResNet18(height = 224, width = 224, depth = 10, classes = 1000),
+    # "se-mxresnet34": SEMXResNet34(height = 224, width = 224, depth = 10, classes = 1000),
+    # "se-mxresnet50": SEMXResNet50(height = 224, width = 224, depth = 10, classes = 1000),
+    # "se-mxresnet101": SEMXResNet101(height = 224, width = 224, depth = 10, classes = 1000),
+    # "se-mxresnet152": SEMXResNet152(height = 224, width = 224, depth = 10, classes = 1000),
 
 
     # CIFAR MODELS
@@ -25,4 +30,8 @@ MODELS = {
     # "mxresnet32": MXResNet32(height = 32, width = 32, depth = 3, classes = 10),
     # "mxresnet44": MXResNet44(height = 32, width = 32, depth = 3, classes = 10),
     # "mxresnet56": MXResNet56(height = 32, width = 32, depth = 3, classes = 10)
+    # "se-mxresnet20": SEMXResNet20(height = 32, width = 32, depth = 3, classes = 10),
+    # "se-mxresnet32": SEMXResNet32(height = 32, width = 32, depth = 3, classes = 10),
+    # "se-mxresnet44": SEMXResNet44(height = 32, width = 32, depth = 3, classes = 10),
+    # "se-mxresnet56": SEMXResNet56(height = 32, width = 32, depth = 3, classes = 10)
 }

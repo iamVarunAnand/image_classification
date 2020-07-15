@@ -19,3 +19,14 @@ from .mxresnet import MXResNet20
 from .mxresnet import MXResNet32
 from .mxresnet import MXResNet44
 from .mxresnet import MXResNet56
+
+from .se_mxresnet import SEMXResNet
+from .se_mxresnet import SEMXResNet18
+from .se_mxresnet import SEMXResNet34
+from .se_mxresnet import SEMXResNet50
+from .se_mxresnet import SEMXResNet101
+from .se_mxresnet import SEMXResNet152
+from .se_mxresnet import SEMXResNet20
+from .se_mxresnet import SEMXResNet32
+from .se_mxresnet import SEMXResNet44
+from .se_mxresnet import SEMXResNet56
