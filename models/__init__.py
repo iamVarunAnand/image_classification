@@ -8,3 +8,14 @@ from .xresnet import XResNet20
 from .xresnet import XResNet32
 from .xresnet import XResNet44
 from .xresnet import XResNet56
+
+from .mxresnet import MXResNet
+from .mxresnet import MXResNet18
+from .mxresnet import MXResNet34
+from .mxresnet import MXResNet50
+from .mxresnet import MXResNet101
+from .mxresnet import MXResNet152
+from .mxresnet import MXResNet20
+from .mxresnet import MXResNet32
+from .mxresnet import MXResNet44
+from .mxresnet import MXResNet56
