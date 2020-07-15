@@ -3,25 +3,6 @@ from ..models import *
 
 # initialize a dict mapping model names to the mdoels
 MODELS = {
-    # IMAGENET MODELS
-    # "xresnet18": XResNet18(height = 224, width = 224, depth = 10, classes = 1000),
-    # "xresnet34": XResNet34(height = 224, width = 224, depth = 10, classes = 1000),
-    # "xresnet50": XResNet50(height = 224, width = 224, depth = 10, classes = 1000),
-    # "xresnet101": XResNet101(height = 224, width = 224, depth = 10, classes = 1000),
-    # "xresnet152": XResNet152(height = 224, width = 224, depth = 10, classes = 1000),
-    # "mxresnet18": MXResNet18(height = 224, width = 224, depth = 10, classes = 1000),
-    # "mxresnet34": MXResNet34(height = 224, width = 224, depth = 10, classes = 1000),
-    # "mxresnet50": MXResNet50(height = 224, width = 224, depth = 10, classes = 1000),
-    # "mxresnet101": MXResNet101(height = 224, width = 224, depth = 10, classes = 1000),
-    # "mxresnet152": MXResNet152(height = 224, width = 224, depth = 10, classes = 1000),
-    # "se-mxresnet18": SEMXResNet18(height = 224, width = 224, depth = 10, classes = 1000),
-    # "se-mxresnet34": SEMXResNet34(height = 224, width = 224, depth = 10, classes = 1000),
-    # "se-mxresnet50": SEMXResNet50(height = 224, width = 224, depth = 10, classes = 1000),
-    # "se-mxresnet101": SEMXResNet101(height = 224, width = 224, depth = 10, classes = 1000),
-    # "se-mxresnet152": SEMXResNet152(height = 224, width = 224, depth = 10, classes = 1000),
-
-
-    # CIFAR MODELS
     "xresnet20": XResNet20(height = 32, width = 32, depth = 3, classes = 10),
     # "xresnet32": XResNet32(height = 32, width = 32, depth = 3, classes = 10),
     # "xresnet44": XResNet44(height = 32, width = 32, depth = 3, classes = 10),

@@ -274,61 +274,6 @@ class SEMXResNet:
         return Model(inputs = inputs, outputs = sc, name = f"{__class__.__name__}{n_layers}")
 
 
-def SEMXResNet18(height = 224, width = 224, depth = 3, classes = 1000):
-    assert height >= 32 and width >= 32, "[ERROR] minimum supported image dimensions: 32x32"
-
-    return SEMXResNet.build(height, width, depth, classes,
-                            stages = [2, 2, 2, 2],
-                            filters = [64, 64, 128, 256, 512],
-                            stem_type = "imagenet",
-                            bottleneck = False,
-                            reg = 1e-4)
-
-
-def SEMXResNet34(height = 224, width = 224, depth = 3, classes = 1000):
-    assert height >= 32 and width >= 32, "[ERROR] minimum supported image dimensions: 32x32"
-
-    return SEMXResNet.build(height, width, depth, classes,
-                            stages = [3, 4, 6, 3],
-                            filters = [64, 64, 128, 256, 512],
-                            stem_type = "imagenet",
-                            bottleneck = False,
-                            reg = 1e-4)
-
-
-def SEMXResNet50(height = 224, width = 224, depth = 3, classes = 1000):
-    assert height >= 32 and width >= 32, "[ERROR] minimum supported image dimensions: 32x32"
-
-    return SEMXResNet.build(height, width, depth, classes,
-                            stages = [3, 4, 6, 3],
-                            filters = [64, 256, 512, 1024, 2048],
-                            stem_type = "imagenet",
-                            bottleneck = True,
-                            reg = 1e-4)
-
-
-def SEMXResNet101(height = 224, width = 224, depth = 3, classes = 1000):
-    assert height >= 32 and width >= 32, "[ERROR] minimum supported image dimensions: 32x32"
-
-    return SEMXResNet.build(height, width, depth, classes,
-                            stages = [3, 4, 23, 3],
-                            filters = [64, 256, 512, 1024, 2048],
-                            stem_type = "imagenet",
-                            bottleneck = True,
-                            reg = 1e-4)
-
-
-def SEMXResNet152(height = 224, width = 224, depth = 3, classes = 1000):
-    assert height >= 32 and width >= 32, "[ERROR] minimum supported image dimensions: 32x32"
-
-    return SEMXResNet.build(height, width, depth, classes,
-                            stages = [3, 8, 36, 3],
-                            filters = [64, 256, 512, 1024, 2048],
-                            stem_type = "imagenet",
-                            bottleneck = True,
-                            reg = 1e-4)
-
-
 def SEMXResNet20(height = 32, width = 32, depth = 3, classes = 10):
     return SEMXResNet.build(height, width, depth, classes,
                             stages = [3, 3, 3],
