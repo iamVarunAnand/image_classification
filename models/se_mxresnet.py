@@ -28,15 +28,51 @@ class SEMXResNet:
     Implements a modified version of ResNet (https://arxiv.org/abs/1512.03385)
     according to (https://arxiv.org/abs/1812.01187) with some inputs from
     FastAI's implementation of CNN models
-    Additionally uses Mish activation and Squeeze-Excitation blocks (https://arxiv.org/abs/1709.01507)
+    Additionally uses Mish activation (https://arxiv.org/abs/1908.08681)
+    and Squeeze-Excitation blocks (https://arxiv.org/abs/1709.01507)
 
     Methods
     -------
+    squeeze_excite_block
+        adds the squeeze excite module to the model architecture
     residual_module
         builds a single residual block based on input parameters
     build
         utilizes 'residual_module' to build entire model architecture based on input parameters
     """
+
+    """
+    Implements the squeeze-excite block
+
+    Parameters
+    ----------
+    tensor: keras tensor
+        reference to the previous layer in the model
+    ratio: (optional) int
+        reduction ratio for se-block, defaults to 16 (according to original paper)
+    name: (optional) str
+        name of the se block
+    """
+
+    @staticmethod
+    def squeeze_excite_block(tensor, ratio = 16, name = "se_block"):
+        init = tensor
+        channel_axis = 1 if K.image_data_format() == "channels_first" else -1
+        filters = init.shape[channel_axis]
+        se_shape = (1, 1, filters)
+
+        se = GlobalAveragePooling2D(name = name + "_gap")(init)
+        se = Reshape(se_shape, name = name + "_reshape")(se)
+        se = Dense(filters // ratio, kernel_initializer = 'he_normal', use_bias = False, name = name + "_squeeze")(se)
+        se = Activation("relu", name = name + "_squeeze_relu")(se)
+        se = Dense(filters, kernel_initializer = 'he_normal', use_bias = False, name = name + "_excite")(se)
+        se = Activation("sigmoid", name = name + "_excite_sigmoid")(se)
+
+        if K.image_data_format() == 'channels_first':
+            se = Permute((3, 1, 2))(se)
+
+        x = multiply([init, se], name = name + "_scale")
+        return x
 
     """
     Builds residual block
@@ -64,26 +100,6 @@ class SEMXResNet:
     name: (optional) str
         name to be appended to all layers in the block, defaults to "res_block"
     """
-
-    @staticmethod
-    def squeeze_excite_block(tensor, ratio = 16, name = "se_block"):
-        init = tensor
-        channel_axis = 1 if K.image_data_format() == "channels_first" else -1
-        filters = init.shape[channel_axis]
-        se_shape = (1, 1, filters)
-
-        se = GlobalAveragePooling2D(name = name + "_gap")(init)
-        se = Reshape(se_shape, name = name + "_reshape")(se)
-        se = Dense(filters // ratio, kernel_initializer = 'he_normal', use_bias = False, name = name + "_squeeze")(se)
-        se = Activation("relu", name = name + "_squeeze_relu")(se)
-        se = Dense(filters, kernel_initializer = 'he_normal', use_bias = False, name = name + "_excite")(se)
-        se = Activation("sigmoid", name = name + "_excite_sigmoid")(se)
-
-        if K.image_data_format() == 'channels_first':
-            se = Permute((3, 1, 2))(se)
-
-        x = multiply([init, se], name = name + "_scale")
-        return x
 
     @staticmethod
     def residual_module(data, K, stride, chan_dim, red = False, reg = 1e-4, bn_eps = 2e-5, bn_mom = 0.9,
