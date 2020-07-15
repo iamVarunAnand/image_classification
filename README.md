@@ -10,3 +10,13 @@ The goal of this project is to firstly replicate the ResNet SOTA results on CIFA
 |+ label smoothing|7.49|92.51
 |+ mixup|7.03|92.97
 |+ reflection padding|**6.90**|**93.10**
+- **Model Architecture updates**
+	1. All the updates mentioned in the [Bag of Tricks](https://arxiv.org/abs/1812.01187) paper - *XResNet*
+	2. [Mish](https://arxiv.org/abs/1908.08681) activation instead of ReLU. [*MXResNet*] - *MXResNet*
+	3. [Squeeze-Excite (SE)](https://arxiv.org/abs/1709.01507) blocks wherever possible. - *SE-MXResNet*
+  
+- **Updates to the Training procedure**
+	1. [MixUp](https://arxiv.org/abs/1710.09412) training.
+	2.  [Cosine-decayed](https://arxiv.org/abs/1608.03983) learning rate schedule.
+	3. Adding Label Smoothing.
+	4. Using reflection padding instead of zero padding for the input images.
