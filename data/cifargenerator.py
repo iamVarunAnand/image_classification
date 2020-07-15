@@ -5,7 +5,7 @@ import numpy as np
 
 class CifarGenerator:
     """
-    Generator class responsible for supplying data to the model. 
+    Generator class responsible for supplying data to the model.
 
     Attributes
     ----------
