@@ -20,3 +20,10 @@ The goal of this project is to firstly replicate the ResNet SOTA results on CIFA
 	2. [Cosine-decayed](https://arxiv.org/abs/1608.03983) learning rate schedule.
 	3. Adding Label Smoothing.
 	4. Using reflection padding instead of zero padding for the input images.
+## Replicating the results
+To replicate the results obtained above, first, clone this repository to your local machine and install all the necessary packages. Optionally, prior to running these commands, you can create a virtual environment by following the steps listed at [this](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/) link
+```
+$ git clone https://github.com/iamVarunAnand/image_classification.git
+$ cd image_classification
+$ pip install -r requirements.txt
+```
