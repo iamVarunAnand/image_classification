@@ -28,12 +28,12 @@ class TrainingMonitor(BaseLogger):
         self.start_at = start_at
 
         # create the necessary directories, if they don't exist
-        FIG_DIR = fig_path.split(os.path.sep)[:-1]
+        FIG_DIR = os.path.join(fig_path.split(os.path.sep)[:-1])
         if not os.path.exists(FIG_DIR):
             os.makedirs(FIG_DIR)
 
         if json_path is not None:
-            JSON_DIR = json_path.split(os.path.sep)[:-1]
+            JSON_DIR = os.path.join(json_path.split(os.path.sep)[:-1])
             if not os.path.exists(JSON_DIR):
                 os.makedirs(JSON_DIR)
 
