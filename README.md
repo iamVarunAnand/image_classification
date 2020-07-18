@@ -50,3 +50,8 @@ USE_COSINE = False # determines if the learning rate is to be scheduled using th
 ```
 $ python train.py
 ```
+### Note on callbacks
+During training, calls to the following callbacks are made either at the end of every batch or every epoch, dependent on the particular callback.
+- *LearningRateScheduler*: Schedules the learning rate as per the policy specified in the config file.
+- *ModelCheckpoint*: Serializes model weights to disk after every epoch. By default, the model weights are stored in the *weights* folder.
+- *TrainingMonitor*: This callback is responsible for plotting the loss and accuracies at the end of every epoch and saving the plot to disk. By default, the plots (and optionally a json file containing the model metrics) are saved to the *output* directory.
