@@ -27,3 +27,26 @@ $ git clone https://github.com/iamVarunAnand/image_classification.git
 $ cd image_classification
 $ pip install -r requirements.txt
 ```
+All training related configurations are specified in a separate config file, located in *utils/config.py.* All the available options are listed below:
+```python
+# dataset configs
+USE_MIXUP = False # determines whether to use mixup training
+USE_REFLECTION_PAD = False # determines if reflection pad is to be used for the input images, instead of zero pad
+
+# model configs
+MODEL_NAME = "xresnet20" # model to be used for training
+
+# training configs
+EPOCHS = 180 # number of training epochs
+START_EPOCH = 0 # epoch to start training at (useful for stop-start training)
+BS = 128 # batch size to be used while training
+INIT_LR = 1e-1 # starting learning rate. (original ResNet paper recommends setting this to 1e-1)
+USE_LBL_SMOOTH = False # determines if label smoothing is used while training
+USE_COSINE = False # determines if the learning rate is to be scheduled using the cosine decay policy.
+```
+For the complete list of supported models, refer to the *dispatcher.py* file in the *utils* folder. This file consists of a dictionary mapping model names to the corresponding *tf.keras.Model* object.
+
+After setting all the necessary parameters in the configuration file, training of the model can be started using the following command ***executed from the base directory of the project***.
+```
+$ python train.py
+```
