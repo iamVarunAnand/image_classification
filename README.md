@@ -21,9 +21,37 @@ The goal of this project is to firstly replicate the ResNet SOTA results on CIFA
 	3. Adding Label Smoothing.
 	4. Using reflection padding instead of zero padding for the input images.
 ## Replicating the results
-To replicate the results obtained above, first, clone this repository to your local machine and install all the necessary packages. Optionally, prior to running these commands, you can create a virtual environment by following the steps listed at [this](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/) link
+- To replicate the results obtained above, first, clone this repository to your local machine and install all the necessary packages. Optionally, prior to running these commands, you can create a virtual environment by following the steps listed at [this](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/) link
 ```
 $ git clone https://github.com/iamVarunAnand/image_classification.git
 $ cd image_classification
 $ pip install -r requirements.txt
 ```
+- All training related configurations are specified in a separate config file, located in *utils/config.py.* All the available options are listed below:
+```python
+# dataset configs
+USE_MIXUP = False # determines whether to use mixup training
+USE_REFLECTION_PAD = False # determines if reflection pad is to be used for the input images, instead of zero pad
+
+# model configs
+MODEL_NAME = "xresnet20" # model to be used for training
+
+# training configs
+EPOCHS = 180 # number of training epochs
+START_EPOCH = 0 # epoch to start training at (useful for stop-start training)
+BS = 128 # batch size to be used while training
+INIT_LR = 1e-1 # starting learning rate. (original ResNet paper recommends setting this to 1e-1)
+USE_LBL_SMOOTH = False # determines if label smoothing is used while training
+USE_COSINE = False # determines if the learning rate is to be scheduled using the cosine decay policy.
+```
+[**NOTE**] For the complete list of supported models, refer to the *dispatcher.py* file in the *utils* folder. This file consists of a dictionary mapping model names to the corresponding *tf.keras.Model* object.
+
+- After setting all the necessary parameters in the configuration file, training of the model can be started using the following command ***executed from the base directory of the project***.
+```
+$ python train.py
+```
+### Note on callbacks
+During training, calls to the following callbacks are made either at the end of every batch or every epoch, dependent on the particular callback.
+- *LearningRateScheduler*: Schedules the learning rate as per the policy specified in the config file.
+- *ModelCheckpoint*: Serializes model weights to disk after every epoch. By default, the model weights are stored in the *weights* folder.
+- *TrainingMonitor*: This callback is responsible for plotting the loss and accuracies at the end of every epoch and saving the plot to disk. By default, the plots (and optionally a json file containing the model metrics) are saved to the *output* directory.
