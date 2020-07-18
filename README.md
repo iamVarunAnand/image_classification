@@ -21,13 +21,13 @@ The goal of this project is to firstly replicate the ResNet SOTA results on CIFA
 	3. Adding Label Smoothing.
 	4. Using reflection padding instead of zero padding for the input images.
 ## Replicating the results
-To replicate the results obtained above, first, clone this repository to your local machine and install all the necessary packages. Optionally, prior to running these commands, you can create a virtual environment by following the steps listed at [this](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/) link
+- To replicate the results obtained above, first, clone this repository to your local machine and install all the necessary packages. Optionally, prior to running these commands, you can create a virtual environment by following the steps listed at [this](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/) link
 ```
 $ git clone https://github.com/iamVarunAnand/image_classification.git
 $ cd image_classification
 $ pip install -r requirements.txt
 ```
-All training related configurations are specified in a separate config file, located in *utils/config.py.* All the available options are listed below:
+- All training related configurations are specified in a separate config file, located in *utils/config.py.* All the available options are listed below:
 ```python
 # dataset configs
 USE_MIXUP = False # determines whether to use mixup training
@@ -44,9 +44,9 @@ INIT_LR = 1e-1 # starting learning rate. (original ResNet paper recommends setti
 USE_LBL_SMOOTH = False # determines if label smoothing is used while training
 USE_COSINE = False # determines if the learning rate is to be scheduled using the cosine decay policy.
 ```
-For the complete list of supported models, refer to the *dispatcher.py* file in the *utils* folder. This file consists of a dictionary mapping model names to the corresponding *tf.keras.Model* object.
+[**NOTE**] For the complete list of supported models, refer to the *dispatcher.py* file in the *utils* folder. This file consists of a dictionary mapping model names to the corresponding *tf.keras.Model* object.
 
-After setting all the necessary parameters in the configuration file, training of the model can be started using the following command ***executed from the base directory of the project***.
+- After setting all the necessary parameters in the configuration file, training of the model can be started using the following command ***executed from the base directory of the project***.
 ```
 $ python train.py
 ```
