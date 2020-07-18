@@ -27,6 +27,16 @@ class TrainingMonitor(BaseLogger):
         self.json_path = json_path
         self.start_at = start_at
 
+        # create the necessary directories, if they don't exist
+        FIG_DIR = fig_path.split(os.path.sep)[:-1]
+        if not os.path.exists(FIG_DIR):
+            os.makedirs(FIG_DIR)
+
+        if json_path is not None:
+            JSON_DIR = json_path.split(os.path.sep)[:-1]
+            if not os.path.exists(JSON_DIR):
+                os.makedirs(JSON_DIR)
+
     def on_train_begin(self, logs = {}):
         # initialize the history dictionary
         self.H = {}
