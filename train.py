@@ -1,7 +1,9 @@
 # add the current directory to PYTHONPATH
+from pathlib import Path
 import sys
 import os
-sys.path.append(os.getcwd())
+path = Path(os.getcwd())
+sys.path.append(str(path.parent))
 
 # import the necessary packages
 from sklearn.model_selection import train_test_split
