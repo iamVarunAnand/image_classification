@@ -2,7 +2,7 @@
 import sys
 import os
 sys.path.append(os.getcwd())
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 # import the necessary packages
 from sklearn.model_selection import train_test_split
 

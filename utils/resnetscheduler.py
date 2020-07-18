@@ -5,9 +5,12 @@ Utility function that implements the learning rate schedule followed in the orig
 To be passed to tf.keras.callbacks.LearningRateScheduler during training
 """
 
+# import the necessary packages
+from .config import *
+
 
 def resnet_lr_scheduler(self, epoch):
-    init_lr = 1e-1
+    init_lr = INIT_LR
 
     if epoch < 1:
         lr = init_lr / 10
