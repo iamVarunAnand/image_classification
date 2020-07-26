@@ -44,9 +44,9 @@ INIT_LR = 1e-1 # starting learning rate. (original ResNet paper recommends setti
 USE_LBL_SMOOTH = False # determines if label smoothing is used while training
 USE_COSINE = False # determines if the learning rate is to be scheduled using the cosine decay policy.
 ```
-[**NOTE**] For the complete list of supported models, refer to the *dispatcher.py* file in the *utils* folder. This file consists of a dictionary mapping model names to the corresponding *tf.keras.Model* object.
+[**NOTE**] For the complete list of supported models, refer to the *dispatcher.py* file in the *utils* folder. This file consists a dictionary, mapping model names to the corresponding *tf.keras.Model* object.
 
-- After setting all the necessary parameters in the configuration file, training of the model can be started using the following command ***executed from the base directory of the project***.
+- After setting all the necessary parameters in the configuration file, to train the model, run the following command ***from the base directory of the project***.
 ```
 $ python train.py
 ```
