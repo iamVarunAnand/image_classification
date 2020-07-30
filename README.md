@@ -1,4 +1,12 @@
 # Image Classification using ResNets
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
+![GitHub Issues](https://img.shields.io/github/issues/iamVarunAnand/image_classification)
+![GitHub stars](https://img.shields.io/github/stars/iamVarunAnand/image_classification)
+![GitHub forks](https://img.shields.io/github/forks/iamVarunAnand/image_classification)
+[![GitHub license](https://img.shields.io/github/license/iamVarunAnand/image_classification.svg)](https://github.com/chiragsamal/Zomato/blob/master/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PR-welcome-brightgreen)](http://makeapullrequest.com)
+
 The goal of this project is to firstly replicate the ResNet SOTA results on CIFAR10, and use several recently published *updates* to push this state of the art as high as possible. Using such updates, I was able to achieve an error rate of **6.90%** on the CIFAR10 test set, using a **20-layer** ResNet that consists of a mere **0.27M parameters**. For comparison, the original ResNet20 presented [here](https://arxiv.org/abs/1512.03385), had an error rate of **8.75%**. The performance of this 20-layer model is comparable with that of the original ResNet56 which was reported to have an error rate of **6.97%**.
 |MODEL|TEST ERR|TEST ACC
 | :-: | :-: | :-:
