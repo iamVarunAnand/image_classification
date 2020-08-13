@@ -23,7 +23,7 @@ import numpy as np
 
 class XResNeXt:
     """
-    Implements a modified version of ResNet (https://arxiv.org/abs/1512.03385)
+    Implements a modified version of ResNeXt (https://arxiv.org/abs/1611.05431)
     according to (https://arxiv.org/abs/1812.01187) with some inputs from
     FastAI's implementation of CNN models
 
