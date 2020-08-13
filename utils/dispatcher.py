@@ -14,5 +14,6 @@ MODELS = {
     # "se-mxresnet20": SEMXResNet20(height = 32, width = 32, depth = 3, classes = 10),
     # "se-mxresnet32": SEMXResNet32(height = 32, width = 32, depth = 3, classes = 10),
     # "se-mxresnet44": SEMXResNet44(height = 32, width = 32, depth = 3, classes = 10),
-    # "se-mxresnet56": SEMXResNet56(height = 32, width = 32, depth = 3, classes = 10)
+    # "se-mxresnet56": SEMXResNet56(height = 32, width = 32, depth = 3, classes = 10),
+    # "xresnext29_8x4d": XResNeXt29_8x4d(height = 32, width = 32, depth = 3, classes = 10)
 }

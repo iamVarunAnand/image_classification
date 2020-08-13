@@ -15,3 +15,5 @@ from .se_mxresnet import SEMXResNet20
 from .se_mxresnet import SEMXResNet32
 from .se_mxresnet import SEMXResNet44
 from .se_mxresnet import SEMXResNet56
+
+from .xresnext import XResNeXt29_8x4d
