@@ -72,7 +72,7 @@ class XResNeXt:
         shortcut = data
 
         # compute the width
-        width = int(K * (width_per_group / float(XResNeXt.base_width))) * groups
+        width = int((K / float(XResNeXt.base_width) * width_per_group)) * groups
 
         # first bottleneck block - 1x1
         bn1 = BatchNormalization(axis=chan_dim, epsilon=bn_eps, momentum=bn_mom, name=name + "_bn1")(data)
@@ -210,10 +210,10 @@ class XResNeXt:
         return Model(inputs=inputs, outputs=sc, name=f"{__class__.__name__}{n_layers}")
 
 
-def XResNeXt29_8x4d(height=32, width=32, depth=3, classes=10):
+def XResNeXt29_16x2d(height=32, width=32, depth=3, classes=10):
     return XResNeXt.build(height, width, depth, classes,
                           stages=[3, 3, 3],
-                          filters=[64, 64, 128, 256],
-                          groups=8,
-                          width_per_group=4,
+                          filters=[16, 64, 128, 256],
+                          groups=16,
+                          width_per_group=2,
                           stem_type="cifar")
