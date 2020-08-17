@@ -63,64 +63,64 @@ class XResNet:
     """
 
     @staticmethod
-    def residual_module(data, K, stride, chan_dim, red = False, reg = 1e-4, bn_eps = 2e-5, bn_mom = 0.9,
-                        bottleneck = True, name = "res_block"):
+    def residual_module(data, K, stride, chan_dim, red=False, reg=1e-4, bn_eps=2e-5, bn_mom=0.9,
+                        bottleneck=True, name="res_block"):
         # shortcut branch
         shortcut = data
 
         if bottleneck:
             # first bottleneck block - 1x1
-            bn1 = BatchNormalization(axis = chan_dim, epsilon = bn_eps, momentum = bn_mom, name = name + "_bn1")(data)
-            act1 = Activation("relu", name = name + "_relu1")(bn1)
-            conv1 = Conv2D(int(K * 0.25), (1, 1), use_bias = False, kernel_regularizer = l2(reg),
-                           kernel_initializer = "he_normal", name = name + "_conv1")(act1)
+            bn1 = BatchNormalization(axis=chan_dim, epsilon=bn_eps, momentum=bn_mom, name=name + "_bn1")(data)
+            act1 = Activation("relu", name=name + "_relu1")(bn1)
+            conv1 = Conv2D(int(K * 0.25), (1, 1), use_bias=False, kernel_regularizer=l2(reg),
+                           kernel_initializer="he_normal", name=name + "_conv1")(act1)
 
             # conv block - 3x3
-            bn2 = BatchNormalization(axis = chan_dim, epsilon = bn_eps, momentum = bn_mom, name = name + "_bn2")(conv1)
-            act2 = Activation("relu", name = name + "_relu2")(bn2)
-            conv2 = Conv2D(int(K * 0.25), (3, 3), strides = stride, padding = "same", use_bias = False,
-                           kernel_initializer = "he_normal", kernel_regularizer = l2(reg), name = name + "_conv2")(act2)
+            bn2 = BatchNormalization(axis=chan_dim, epsilon=bn_eps, momentum=bn_mom, name=name + "_bn2")(conv1)
+            act2 = Activation("relu", name=name + "_relu2")(bn2)
+            conv2 = Conv2D(int(K * 0.25), (3, 3), strides=stride, padding="same", use_bias=False,
+                           kernel_initializer="he_normal", kernel_regularizer=l2(reg), name=name + "_conv2")(act2)
 
             # second bottleneck block - 1x1
-            bn3 = BatchNormalization(axis = chan_dim, epsilon = bn_eps, momentum = bn_mom, name = name + "_bn3")(conv2)
-            act3 = Activation("relu", name = name + "_relu3")(bn3)
-            conv3 = Conv2D(K, (1, 1), use_bias = False, kernel_regularizer = l2(
-                reg), kernel_initializer = "he_normal", name = name + "_conv3")(act3)
+            bn3 = BatchNormalization(axis=chan_dim, epsilon=bn_eps, momentum=bn_mom, name=name + "_bn3")(conv2)
+            act3 = Activation("relu", name=name + "_relu3")(bn3)
+            conv3 = Conv2D(K, (1, 1), use_bias=False, kernel_regularizer=l2(
+                reg), kernel_initializer="he_normal", name=name + "_conv3")(act3)
 
             # if dimensions are to be reduced, apply a conv layer to the shortcut
             if red:
-                shortcut = AveragePooling2D(pool_size = (2, 2), strides = stride,
-                                            padding = "same", name = name + "_avg_pool")(act1)
-                shortcut = Conv2D(K, (1, 1), strides = (1, 1), use_bias = False, kernel_initializer = "he_normal",
-                                  kernel_regularizer = l2(reg), name = name + "_red")(shortcut)
-                shortcut = BatchNormalization(name = name + "_red_bn")(shortcut)
+                shortcut = AveragePooling2D(pool_size=(2, 2), strides=stride,
+                                            padding="same", name=name + "_avg_pool")(act1)
+                shortcut = Conv2D(K, (1, 1), strides=(1, 1), use_bias=False, kernel_initializer="he_normal",
+                                  kernel_regularizer=l2(reg), name=name + "_red")(shortcut)
+                shortcut = BatchNormalization(name=name + "_red_bn")(shortcut)
 
             # add the shortcut and final conv
-            x = add([conv3, shortcut], name = name + "_add")
+            x = add([conv3, shortcut], name=name + "_add")
 
         else:
             # conv block 1 - 3x3
-            bn1 = BatchNormalization(axis = chan_dim, epsilon = bn_eps, momentum = bn_mom, name = name + "_bn1")(data)
-            act1 = Activation("relu", name = name + "_relu1")(bn1)
-            conv1 = Conv2D(K, (3, 3), strides = stride, padding = "same", use_bias = False,
-                           kernel_initializer = "he_normal", kernel_regularizer = l2(reg), name = name + "_conv1")(act1)
+            bn1 = BatchNormalization(axis=chan_dim, epsilon=bn_eps, momentum=bn_mom, name=name + "_bn1")(data)
+            act1 = Activation("relu", name=name + "_relu1")(bn1)
+            conv1 = Conv2D(K, (3, 3), strides=stride, padding="same", use_bias=False,
+                           kernel_initializer="he_normal", kernel_regularizer=l2(reg), name=name + "_conv1")(act1)
 
             # conv block 2 - 3x3
-            bn2 = BatchNormalization(axis = chan_dim, epsilon = bn_eps, momentum = bn_mom, name = name + "_bn2")(conv1)
-            act2 = Activation("relu", name = name + "_relu2")(bn2)
-            conv2 = Conv2D(K, (3, 3), padding = "same", use_bias = False,
-                           kernel_initializer = "he_normal", kernel_regularizer = l2(reg), name = name + "_conv2")(act2)
+            bn2 = BatchNormalization(axis=chan_dim, epsilon=bn_eps, momentum=bn_mom, name=name + "_bn2")(conv1)
+            act2 = Activation("relu", name=name + "_relu2")(bn2)
+            conv2 = Conv2D(K, (3, 3), padding="same", use_bias=False,
+                           kernel_initializer="he_normal", kernel_regularizer=l2(reg), name=name + "_conv2")(act2)
 
             # if dimensions are to be reduced, apply a conv layer to the shortcut
             if red and stride != (1, 1):
-                shortcut = AveragePooling2D(pool_size = (2, 2), strides = stride,
-                                            padding = "same", name = name + "_avg_pool")(act1)
-                shortcut = Conv2D(K, (1, 1), strides = (1, 1), use_bias = False, kernel_initializer = "he_normal",
-                                  kernel_regularizer = l2(reg), name = name + "_red")(shortcut)
-                shortcut = BatchNormalization(name = name + "_red_bn")(shortcut)
+                shortcut = AveragePooling2D(pool_size=(2, 2), strides=stride,
+                                            padding="same", name=name + "_avg_pool")(act1)
+                shortcut = Conv2D(K, (1, 1), strides=(1, 1), use_bias=False, kernel_initializer="he_normal",
+                                  kernel_regularizer=l2(reg), name=name + "_red")(shortcut)
+                shortcut = BatchNormalization(name=name + "_red_bn")(shortcut)
 
             # add the shortcut and final conv
-            x = add([conv2, shortcut], name = name + "_add")
+            x = add([conv2, shortcut], name=name + "_add")
 
         # return the addition as the output of the residual block
         return x
@@ -155,8 +155,8 @@ class XResNet:
     """
 
     @staticmethod
-    def build(height, width, depth, classes, stages, filters, stem_type = "imagenet", bottleneck = True,
-              reg = 1e-4, bn_eps = 2e-5, bn_mom = 0.9):
+    def build(height, width, depth, classes, stages, filters, stem_type="imagenet", bottleneck=True,
+              reg=1e-4, bn_eps=2e-5, bn_mom=0.9):
         # set the input shape
         if K.image_data_format() == "channels_last":
             input_shape = (height, width, depth)
@@ -169,20 +169,20 @@ class XResNet:
         n_layers = 0
 
         # input block
-        inputs = Input(shape = input_shape)
+        inputs = Input(shape=input_shape)
 
         # stem
         if stem_type == "imagenet":
-            x = Conv2D(filters[0], (3, 3), strides = (2, 2), use_bias = False, padding = "same",
-                       kernel_initializer = "he_normal", kernel_regularizer = l2(reg), name = "stem_conv1")(inputs)
-            x = Conv2D(filters[0], (3, 3), strides = (1, 1), use_bias = False, padding = "same",
-                       kernel_initializer = "he_normal", kernel_regularizer = l2(reg), name = "stem_conv2")(x)
-            x = Conv2D(filters[0], (3, 3), strides = (1, 1), use_bias = False, padding = "same",
-                       kernel_initializer = "he_normal", kernel_regularizer = l2(reg), name = "stem_conv3")(x)
-            x = MaxPooling2D(pool_size = (3, 3), strides = (2, 2), padding = "same", name = "stem_max_pool")(x)
+            x = Conv2D(filters[0], (3, 3), strides=(2, 2), use_bias=False, padding="same",
+                       kernel_initializer="he_normal", kernel_regularizer=l2(reg), name="stem_conv1")(inputs)
+            x = Conv2D(filters[0], (3, 3), strides=(1, 1), use_bias=False, padding="same",
+                       kernel_initializer="he_normal", kernel_regularizer=l2(reg), name="stem_conv2")(x)
+            x = Conv2D(filters[0], (3, 3), strides=(1, 1), use_bias=False, padding="same",
+                       kernel_initializer="he_normal", kernel_regularizer=l2(reg), name="stem_conv3")(x)
+            x = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same", name="stem_max_pool")(x)
         elif stem_type == "cifar":
-            x = Conv2D(filters[0], (3, 3), use_bias = False, padding = "same", kernel_initializer = "he_normal",
-                       kernel_regularizer = l2(reg), name = "stem_conv")(inputs)
+            x = Conv2D(filters[0], (3, 3), use_bias=False, padding="same", kernel_initializer="he_normal",
+                       kernel_regularizer=l2(reg), name="stem_conv")(inputs)
 
         # increment the number of layers
         n_layers += 1
@@ -193,15 +193,15 @@ class XResNet:
             stride = (1, 1) if i == 0 else (2, 2)
 
             name = f"stage{i + 1}_res_block1"
-            x = XResNet.residual_module(x, filters[i + 1], stride, chan_dim, reg = reg, red = True,
-                                        bn_eps = bn_eps, bn_mom = bn_mom, bottleneck = bottleneck, name = name)
+            x = XResNet.residual_module(x, filters[i + 1], stride, chan_dim, reg=reg, red=True,
+                                        bn_eps=bn_eps, bn_mom=bn_mom, bottleneck=bottleneck, name=name)
 
             # loop through the number of layers in the stage
             for j in range(0, stages[i] - 1):
                 # apply a residual module
                 name = f"stage{i + 1}_res_block{j + 2}"
-                x = XResNet.residual_module(x, filters[i + 1], (1, 1), chan_dim, reg = reg,
-                                            bn_eps = bn_eps, bn_mom = bn_mom, bottleneck = bottleneck, name = name)
+                x = XResNet.residual_module(x, filters[i + 1], (1, 1), chan_dim, reg=reg,
+                                            bn_eps=bn_eps, bn_mom=bn_mom, bottleneck=bottleneck, name=name)
 
             # increment the number of layers
             if bottleneck:
@@ -210,15 +210,15 @@ class XResNet:
                 n_layers += (2 * stages[i])
 
         # BN => RELU -> POOL
-        x = BatchNormalization(axis = chan_dim, epsilon = bn_eps, momentum = bn_mom, name = "final_bn")(x)
-        x = Activation("relu", name = "final_relu")(x)
-        x1 = GlobalAveragePooling2D(name = "global_avg_pooling")(x)
-        x2 = GlobalMaxPooling2D(name = "global_max_pooling")(x)
-        x = concatenate([x1, x2], axis = -1, name = "concatenate")
+        x = BatchNormalization(axis=chan_dim, epsilon=bn_eps, momentum=bn_mom, name="final_bn")(x)
+        x = Activation("relu", name="final_relu")(x)
+        x1 = GlobalAveragePooling2D(name="global_avg_pooling")(x)
+        x2 = GlobalMaxPooling2D(name="global_max_pooling")(x)
+        x = concatenate([x1, x2], axis=-1, name="concatenate")
 
         # softmax classifier
-        sc = Dense(classes, kernel_initializer = "he_normal", kernel_regularizer = l2(reg), name = "classifier")(x)
-        sc = Activation("softmax", name = "softmax")(sc)
+        sc = Dense(classes, kernel_initializer="he_normal", kernel_regularizer=l2(reg), name="classifier")(x)
+        sc = Activation("softmax", name="softmax")(sc)
 
         # increment the number of layers
         n_layers += 1
@@ -226,36 +226,49 @@ class XResNet:
         print(f"[INFO] {__class__.__name__}{n_layers} built successfully!")
 
         # return the constructed network architecture
-        return Model(inputs = inputs, outputs = sc, name = f"{__class__.__name__}{n_layers}")
+        return Model(inputs=inputs, outputs=sc, name=f"{__class__.__name__}{n_layers}")
 
 
-def XResNet20(height = 32, width = 32, depth = 3, classes = 10):
+def XResNet20(height=32, width=32, depth=3, classes=10):
     return XResNet.build(height, width, depth, classes,
-                         stages = [3, 3, 3],
-                         filters = [16, 16, 32, 64],
-                         stem_type = "cifar",
-                         bottleneck = False)
+                         stages=[3, 3, 3],
+                         filters=[16, 16, 32, 64],
+                         stem_type="cifar",
+                         bottleneck=False)
 
 
-def XResNet32(height = 32, width = 32, depth = 3, classes = 10):
+def XResNet32(height=32, width=32, depth=3, classes=10):
     return XResNet.build(height, width, depth, classes,
-                         stages = [5, 5, 5],
-                         filters = [16, 16, 32, 64],
-                         stem_type = "cifar",
-                         bottleneck = False)
+                         stages=[5, 5, 5],
+                         filters=[16, 16, 32, 64],
+                         stem_type="cifar",
+                         bottleneck=False)
 
 
-def XResNet44(height = 32, width = 32, depth = 3, classes = 10):
+def XResNet44(height=32, width=32, depth=3, classes=10):
     return XResNet.build(height, width, depth, classes,
-                         stages = [7, 7, 7],
-                         filters = [16, 16, 32, 64],
-                         stem_type = "cifar",
-                         bottleneck = False)
+                         stages=[7, 7, 7],
+                         filters=[16, 16, 32, 64],
+                         stem_type="cifar",
+                         bottleneck=False)
 
 
-def XResNet56(height = 32, width = 32, depth = 3, classes = 10):
+def XResNet56(height=32, width=32, depth=3, classes=10):
     return XResNet.build(height, width, depth, classes,
-                         stages = [9, 9, 9],
-                         filters = [16, 16, 32, 64],
-                         stem_type = "cifar",
-                         bottleneck = False)
+                         stages=[9, 9, 9],
+                         filters=[16, 16, 32, 64],
+                         stem_type="cifar",
+                         bottleneck=False)
+
+
+def XResNet29(height=32, width=32, depth=3, classes=10):
+    return XResNet.build(height, width, depth, classes,
+                         stages=[3, 3, 3],
+                         filters=[64, 256, 512, 1024],
+                         bottleneck=True,
+                         stem_type="cifar")
+
+
+if __name__ == "__main__":
+    model = XResNet29()
+    print(model.summary())
