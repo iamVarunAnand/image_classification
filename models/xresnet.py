@@ -259,16 +259,3 @@ def XResNet56(height=32, width=32, depth=3, classes=10):
                          filters=[16, 16, 32, 64],
                          stem_type="cifar",
                          bottleneck=False)
-
-
-def XResNet29(height=32, width=32, depth=3, classes=10):
-    return XResNet.build(height, width, depth, classes,
-                         stages=[3, 3, 3],
-                         filters=[64, 256, 512, 1024],
-                         bottleneck=True,
-                         stem_type="cifar")
-
-
-if __name__ == "__main__":
-    model = XResNet29()
-    print(model.summary())
