@@ -1,6 +1,3 @@
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-
 # import the necessary packages
 from image_classification.layers import Mish
 
