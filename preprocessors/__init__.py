@@ -3,4 +3,3 @@ from .reflectionpadpreprocessor import ReflectionPadPreprocessor
 from .patchpreprocessor import PatchPreprocessor
 from .flippreprocessor import FlipPreprocessor
 from .meanpreprocessor import MeanPreprocessor
-from .imagetoarraypreprocessor import ImageToArrayPreprocessor

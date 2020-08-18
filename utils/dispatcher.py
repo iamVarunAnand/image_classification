@@ -1,5 +1,6 @@
 # import the necessary packages
 from ..models import *
+from .config import *
 
 # initialize a dict mapping model names to the mdoels
 MODELS = {
