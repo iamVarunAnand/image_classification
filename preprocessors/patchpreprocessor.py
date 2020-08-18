@@ -1,5 +1,5 @@
 # import the necessary packages
-from sklearn.feature_extraction.image import extract_patches_2d
+import tensorflow as tf
 
 
 class PatchPreprocessor:
@@ -22,4 +22,4 @@ class PatchPreprocessor:
 
     def preprocess(self, img):
         # extract a random patch from the image and return it
-        return extract_patches_2d(img, (self.trgt_h, self.trgt_w), max_patches = 1)[0]
+        return tf.image.random_crop(img, (self.trgt_h, self.trgt_w, 3))

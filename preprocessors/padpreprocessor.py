@@ -1,5 +1,5 @@
 # import the necessary packages
-import numpy as np
+import tensorflow as tf
 
 
 class PadPreprocessor:
@@ -19,4 +19,4 @@ class PadPreprocessor:
 
     def preprocess(self, img):
         # return the padded image
-        return np.pad(img, ((self.pad, self.pad), (self.pad, self.pad), (0, 0)))
+        return tf.pad(img, [[self.pad, self.pad], [self.pad, self.pad], [0, 0]], mode="CONSTANT")

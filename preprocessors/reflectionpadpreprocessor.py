@@ -1,5 +1,5 @@
 # import the necessary packages
-import numpy as np
+import tensorflow as tf
 
 
 class ReflectionPadPreprocessor:
@@ -19,20 +19,5 @@ class ReflectionPadPreprocessor:
         self.pad = pad
 
     def preprocess(self, img):
-        # zero pad the image
-        img = np.pad(img, ((self.pad, self.pad), (self.pad, self.pad), (0, 0)))
-
-        # reflect pad the image
-        for i, j in zip(range(self.pad), range(self.pad)):
-            xstart = self.pad
-            xend = img.shape[1] - self.pad - 1
-            ystart = self.pad
-            yend = img.shape[0] - self.pad - 1
-
-            img[:, xstart - i - 1] = img[:, xstart + i + 1]
-            img[:, xend + i + 1] = img[:, xend - i - 1]
-            img[ystart - j - 1, :] = img[ystart + j + 1, :]
-            img[yend + j + 1, :] = img[yend - j - 1, :]
-
         # return the processed image
-        return img
+        return tf.pad(img, [[self.pad, self.pad], [self.pad, self.pad], [0, 0]], mode="REFLECT")
