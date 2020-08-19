@@ -35,7 +35,28 @@ The goal of this project is to firstly replicate the ResNet SOTA results on CIFA
 | SE-MXResNet20 | 0.27M  |   6.90   |   93.10   |
 | SE-MXResNet32 | 0.47M  |   6.20   |   93.80   |
 | SE-MXResNet44 | 0.67M  |   6.12   |   93.88   |
-| SE-MXResNet56 | 0.86M  | **5.64** | **94.36** |
+| SE-MXResNet56 | 0.86M  | 5.64 | 94.36 |
+
+### Update:
+I have updated the repository with ResNeXt based models to assess their influence in improving the performance. For this purpose, I have modified the original ResNeXt models presented [here](https://arxiv.org/abs/1611.05431), such that they have roughly the same complexities as their ResNet counterparts.
+1. **Addition of bottlenecks:** Since ResNeXt models make use of bottleneck residual blocks, I have increased the width of the ResNet models by 4x, which accounts for the reduction the feature maps undergo while entering a bottleneck block. The ResNeXt models therefore have [64, 64, 128, 256] filters as opposed to [16, 16, 32, 64] in ResNet.
+2. **Determining cardinality:** To do so, I have referred to the process followed in the original paper, which is demonstrated in the following table. I finally settled on using a cardinality of 16, which translates to a bottleneck width of 2. In other words, the bottleneck conv layer is implemented as a grouped convolution consisting of 16 groups, each having 2 feature maps.
+
+| Cardinality - C | Bottleneck width - d | Group Conv width
+| :-: | :-: | :-: |
+|1|16|16
+|2|10|20
+|4|6|24
+**16**|**2**|**32**|
+
+Following this process, I developed a model called *XResNeXt29_16x2d*. This model has 0.32M parameters, comparable to XResNet20. The extra 9 layers are a result of using the bottleneck blocks, which consist of 3 conv layers as opposed to the basic block's 2. The performance of this model is shown below.
+|MODEL|PARAMS|TEST ERR|TEST ACC
+| :-: |:-:| :-: | :-:
+|XResNet29|0.31M|7.62|92.38
+|XResNeXt29_16x2d|0.32M|6.70|93.30
+|SE-MXResNeXt29_16x2d|0.36M|**5.32**|**94.68**
+
+**After adding all the updates, this 29 layer model outperforms the 56 layer SE-MXResNet, while using less than half the number of parameters.**
 
 ## Replicating the results
 - To replicate the results obtained above, first, clone this repository to your local machine and install all the necessary packages. Optionally, prior to running these commands, you can create a virtual environment by following the steps listed at [this](https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/26/python-virtual-env/) link
