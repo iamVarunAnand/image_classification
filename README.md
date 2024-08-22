@@ -7,7 +7,8 @@
 [![GitHub license](https://img.shields.io/github/license/iamVarunAnand/image_classification.svg)](https://github.com/iamVarunAnand/image_classification/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PR-welcome-brightgreen)](http://makeapullrequest.com)
 
-The goal of this project is to firstly replicate the ResNet SOTA results on CIFAR10, and use several recently published *updates* to push this state of the art as high as possible. Using such updates, I was able to achieve an error rate of **6.90%** on the CIFAR10 test set, using a **20-layer** ResNet that consists of a mere **0.27M parameters**. For comparison, the original ResNet20 presented [here](https://arxiv.org/abs/1512.03385), had an error rate of **8.75%**. The performance of this 20-layer model is comparable with that of the original ResNet56 which was reported to have an error rate of **6.97%**. By replacing the ResNet blocks with their ResNeXt equivalents, the error rate is further reduced to **5.32%**.
+This project aimed to replicate and improve ResNet SOTA results on CIFAR10. I achieved a **6.90%** error rate using a **20-layer** ResNet with **0.27M** parameters, improving upon the original ResNet20's 8.75% error rate and matching ResNet56's 6.97% (presented [here](https://arxiv.org/abs/1512.03385)). Replacing ResNet blocks with ResNeXt further reduced the error rate to 5.32%.
+
 |                    MODEL                     | TEST ERR | TEST ACC  |
 | :------------------------------------------: | :------: | :-------: |
 | [ResNet20](https://arxiv.org/abs/1512.03385) |   8.75   |   91.25   |
